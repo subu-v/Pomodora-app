@@ -1,0 +1,44 @@
+.tabbed {
+  border-radius: 31.5px;
+  background-color: #161932;
+  margin-bottom: 45px;
+
+  &-ul {
+    width: 373px;
+    height: 63px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    padding: 0 7px;
+  }
+  &-button {
+    border: none;
+    background-color: initial;
+    border-radius: 26.5px;
+
+    color: #d7e0ff;
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    opacity: 0.4;
+
+    width: 120px;
+    height: 48px;
+
+    text-align: center;
+    text-decoration: none;
+
+    transition: all 0.35s ease-in;
+
+    &-active {
+      background-color: #f87070;
+      color: #1e213f;
+      opacity: 1;
+    }
+  }
+}

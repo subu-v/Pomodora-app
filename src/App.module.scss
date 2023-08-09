@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "Kumbh Sans";
+  src: url("../public/assets/fonts/KumbhSans-VariableFont_YOPQ,wght.ttf");
+  font-style: "normal";
+  font-weight: 0 1000;
+}
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Kumbh Sans";
+}
+
+.pomodora {
+  background-color: #1e213f;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100vh;
+  .pomodora-h {
+    color: #d7e0ff;
+    text-align: center;
+    font-family: inherit;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 55px;
+  }
+}

@@ -2,54 +2,98 @@
   width: 410px;
   height: 410px;
   border-radius: 410px;
-  background: linear-gradient(315deg, #2e325a 0%, #0e112a 100%);
+  background-image: linear-gradient(315deg, #2e325a 0%, #0e112a 100%);
   box-shadow: 50px 50px 100px 0px #121530, -50px -50px 100px 0px #272c5a;
-  display: grid;
-  place-items: center;
+  position: relative;
+  z-index: 1;
 
-  &-inner {
+  &-outer {
+    border-radius: 366px;
+    background-color: #161932;
+
     width: 366px;
     height: 366px;
-    border-radius: 366px;
-    background: #161932;
-    position: relative;
 
-    display: grid;
-    place-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+
+    z-index: 2;
+  }
+
+  &-inner {
+    width: 339px;
+    height: 339px;
+    border-radius: 339px;
+    background-color: #161932;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: 3;
+    overflow: hidden;
   }
 
   &-progress-bar {
-    position: absolute;
-    width: 40px;
-    height: 40px;
     background-color: #f87070;
+
+    width: 50%;
+    height: 100%;
+
+    transition: all 1s ease-in;
+    transform-origin: right center;
   }
 
-  &-counter-box {
-    display: grid;
+  &:hover &-progress-bar {
+    transform: rotate(360deg);
   }
 
   &-counter {
-    color: #d7e0ff;
-    text-align: center;
-    font-family: Kumbh Sans;
-    font-size: 100px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: -5px;
-    margin-bottom: 19px;
+    width: 317px;
+    height: 317px;
 
-    &-button {
-      border: none;
-      background-color: initial;
+    border-radius: 317px;
+    background-color: #161932;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+
+    z-index: 4;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-desc {
       color: #d7e0ff;
+      text-align: center;
+      font-family: Kumbh Sans;
+      font-size: 100px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      letter-spacing: -5px;
+    }
+
+    &-btn {
+      color: #d7e0ff;
+      text-align: center;
       font-family: Kumbh Sans;
       font-size: 16px;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
       letter-spacing: 15px;
+
+      border: none;
+      background-color: initial;
+
+      width: 159px;
       margin: 0 auto;
     }
   }

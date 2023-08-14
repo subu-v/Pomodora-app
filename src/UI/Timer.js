@@ -2,16 +2,19 @@ import { React, useState, useRef, useEffect } from "react";
 import style from "./Timer.module.scss";
 
 const Timer = () => {
-  let startTime = 1;
-  let [totalTimeInSecs, setTotalTimeInSecs] = useState(startTime * 60);
-  const startPomodora = useRef(null);
-  const startStopBtn = useRef(null);
+  const startTime = 1;
+  const totalTimeInSecs = useRef(startTime * 60);
+  const [startStopTimerFlag, setstartStopTimerFlag] = useState(false);
+  const startStopTimerBtn = useRef(null);
+  const startPomodoraInterval = useRef(null);
 
   const timeCalculation = () => {
-    if (totalTimeInSecs === 0) clearInterval(startPomodora.current);
-
-    const minutes = Math.floor(totalTimeInSecs / 60);
-    const seconds = totalTimeInSecs % 60;
+    if (totalTimeInSecs.current === 0) {
+      clearInterval(startPomodoraInterval.current);
+      startStopTimerBtn.current.textContent = "RESTART";
+    }
+    const minutes = Math.floor(totalTimeInSecs.current / 60);
+    const seconds = totalTimeInSecs.current % 60;
 
     document.querySelector(
       `.${style["timer-countdown-desc"]}`
@@ -19,24 +22,26 @@ const Timer = () => {
       seconds < 10 ? "0" + seconds : seconds
     }`;
 
-    setTotalTimeInSecs(totalTimeInSecs--);
+    totalTimeInSecs.current--;
+  };
+
+  const startStopTimerBtnHandler = () => {
+    if (startStopTimerBtn.current.textContent === "RESTART") {
+      if (!startStopTimerFlag) totalTimeInSecs.current = startTime * 60;
+      setstartStopTimerFlag(true);
+      startStopTimerBtn.current.textContent = "PAUSE";
+    } else if (startStopTimerBtn.current.textContent === "PAUSE") {
+      setstartStopTimerFlag(false);
+      startStopTimerBtn.current.textContent = "RESTART";
+    }
   };
 
   useEffect(() => {
-    startPomodora.current = setInterval(timeCalculation, 1000);
-  }, []);
+    if (startStopTimerFlag)
+      startPomodoraInterval.current = setInterval(timeCalculation, 1000);
+    return () => clearInterval(startPomodoraInterval.current);
+  }, [startStopTimerFlag]);
 
-  const stop = (event) => {
-    console.log(startStopBtn);
-    if (event.target.innerText === "RESTART") {
-      clearInterval(startPomodora.current);
-      setTotalTimeInSecs(startTime * 60);
-      event.target.innerText = "PAUSE";
-    } else if (event.target.innerText === "PAUSE") {
-      clearInterval(startPomodora.current);
-      event.target.innerText = "RESTART";
-    }
-  };
   return (
     <div className={style["timer"]}>
       <div className={style["timer-outer"]}></div>
@@ -46,8 +51,8 @@ const Timer = () => {
       <div className={style["timer-countdown"]}>
         <p className={style["timer-countdown-desc"]}>00:00</p>
         <button
-          ref={startStopBtn}
-          onClick={stop}
+          ref={startStopTimerBtn}
+          onClick={startStopTimerBtnHandler}
           className={style["timer-countdown-btn"]}
         >
           RESTART

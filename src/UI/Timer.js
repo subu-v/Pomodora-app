@@ -4,15 +4,16 @@ import style from "./Timer.module.scss";
 const Timer = () => {
   const startTime = 1;
   const totalTimeInSecs = useRef(startTime * 60);
-  const [startStopTimerFlag, setstartStopTimerFlag] = useState(false);
   const startStopTimerBtn = useRef(null);
   const startPomodoraInterval = useRef(null);
+  const [startStopTimerFlag, setstartStopTimerFlag] = useState(false);
 
   const timeCalculation = () => {
     if (totalTimeInSecs.current === 0) {
       clearInterval(startPomodoraInterval.current);
       startStopTimerBtn.current.textContent = "RESTART";
     }
+    
     const minutes = Math.floor(totalTimeInSecs.current / 60);
     const seconds = totalTimeInSecs.current % 60;
 
@@ -30,9 +31,11 @@ const Timer = () => {
       if (!startStopTimerFlag) totalTimeInSecs.current = startTime * 60;
       setstartStopTimerFlag(true);
       startStopTimerBtn.current.textContent = "PAUSE";
+      startStopTimerBtn.current.style.width = "112px";
     } else if (startStopTimerBtn.current.textContent === "PAUSE") {
       setstartStopTimerFlag(false);
       startStopTimerBtn.current.textContent = "RESTART";
+      startStopTimerBtn.current.style.width = "159px";
     }
   };
 

@@ -2,7 +2,7 @@
   border-radius: 31.5px;
   background-color: #161932;
   width: 373px;
-  margin: 0 auto 45px auto;
+  margin: 0 auto 64px auto;
 
   &-ul {
     width: 373px;
@@ -36,6 +36,9 @@
 
     transition: all 0.35s ease-in;
 
+    &:hover {
+      opacity: 1;
+    }
     &-active {
       background-color: #f87070;
       color: #1e213f;

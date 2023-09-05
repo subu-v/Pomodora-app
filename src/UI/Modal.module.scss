@@ -1,0 +1,8 @@
+.modal {
+  display: grid;
+  place-items: center;
+  &-img {
+    width: 27px;
+    height: 28px;
+  }
+}

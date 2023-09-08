@@ -48,28 +48,46 @@ const Dialog = (prop) => {
   };
 
   const handleClickFontSwitcher = (e) => {
-    // Remove active class from the btn elements
+    // Remove active class from all the btn elements
     document
       .querySelectorAll(`.${style["dialog-font-switcher-btn"]}`)
       .forEach((btn) =>
         btn.classList.remove(`${style["dialog-font-switcher-btn-active"]}`)
       );
+    // Add the active class to the btn element that is being clicked
     e.target.classList.add(`${style["dialog-font-switcher-btn-active"]}`);
   };
 
   const handleClickThemeSwitcher = (e) => {
+    // Remove active class from all the btn elements
     document
       .querySelectorAll(`.${style["dialog-theme-switcher-btn"]}`)
       .forEach((btn) => {
         btn.classList.remove(`${style["dialog-theme-switcher-btn-active"]}`);
       });
+    // Add the active class to the btn element that is being clicked
     e.target.classList.add(`${style["dialog-theme-switcher-btn-active"]}`);
   };
 
   const handleClickDialogClose = (e) => {
     prop.handleClickDialogOpen();
   };
-  
+
+  const handleClickApply = (e) => {
+    // Change font-family
+    const btnsFontFamily = document.querySelectorAll(
+      `.${style["dialog-font-switcher-btn"]}`
+    );
+    btnsFontFamily.forEach((btn) => {
+      if (
+        btn.classList.contains(`${style["dialog-font-switcher-btn-active"]}`)
+      ) {
+        document.body.style.fontFamily = getComputedStyle(btn).fontFamily;
+      }
+    });
+    prop.handleClickDialogOpen();
+  };
+
   return (
     <div className={style["dialog"]}>
       <div className={style["dialog-header"]}>
@@ -200,7 +218,9 @@ const Dialog = (prop) => {
           </div>
         </div>
       </div>
-      <button className={style["dialog-apply-btn"]}>Apply</button>
+      <button onClick={handleClickApply} className={style["dialog-apply-btn"]}>
+        Apply
+      </button>
     </div>
   );
 };

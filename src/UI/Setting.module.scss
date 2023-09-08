@@ -1,7 +1,8 @@
-.modal {
+.setting {
   display: grid;
   place-items: center;
   &-img {
+    cursor: pointer;
     width: 27px;
     height: 28px;
   }

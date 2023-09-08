@@ -51,7 +51,6 @@ const Timer = () => {
     if (angle >= 180) {
       // Assigning the angle value to the rotate style property in deg will make the  first progressbar(square) rotate.
       progressBars[0].style.rotate = `${angle}deg`;
-
     } else {
       // Now half of the time is complated and the value of the angle is less than 180.
       // There are two progress bar elements, first is at 0deg, second one is at 180deg,
@@ -59,7 +58,7 @@ const Timer = () => {
       // Now when half of the timer is completed, the first progress bar will be rotated 180deg and the second progress bar is already rotated 180deg initially, now both the progress bar elements will start to rotate from the 180deg simultaneously.
       progressBars[0].style.rotate = `${angle}deg`;
       progressBars[1].style.rotate = `${angle}deg`;
-      // As it starts to rotate, it will cross the 0deg mark without this hiddenSemiCircle, as both the progress starts to rotate from 180deg, it will cross the 0deg mark again and rotates towards the 180deg mark and it is visible in the UI. 
+      // As it starts to rotate, it will cross the 0deg mark without this hiddenSemiCircle, as both the progress starts to rotate from 180deg, it will cross the 0deg mark again and rotates towards the 180deg mark and it is visible in the UI.
       // Making the opacity of the hiddenSemiCircle to 1 will make sure both the rotating progress bars are not visible as it crosses the 0deg mark again for a single pomodora timer.
       hiddenSemiCircle.current.style.opacity = 1;
     }
@@ -106,17 +105,13 @@ const Timer = () => {
 
   // The callback function of this useEffect will run on the mount(for the first initial render) and run if the restartPauseTimerFlag state value is changed compared to its previous value.
   useEffect(() => {
-    console.log("useeffect callback function");
     // If the restartPauseTimerFlag is true, then the setInterval method will run, this check is mandatory for one reason, without this check, if you just defined the setInterval method, for every render of this component whenever the dependencies are chanaged, the call function will be called withit executing the setInterval method which cause the timer to run irrespective of whether the user click pause or during the initial render as well.
     if (restartPauseTimerFlag)
       // The value of the restartPauseTimerFlag is true, then the startPomodoraInterval ref current value is assigned to setInerval() with timeCalculation as its callback function and this function will run for every second cause 1000 millisecond is 1 second
       startPomodoraInterval.current = setInterval(timeCalculation, 1000);
     // This cleanup callback function will be called whenever the component re-renders and the component is removed from the screen (unmount), what the callback function does is that, it clears the setInterval that was running before the component re-rendered.
     // Let's say you clicked "RESTART" btn, the setInterval method is executed and the timer is running, now you clicked "PAUSE", now without the clearInterval method, the previously running setInterval will not be stopped cause the timer will keep on running because the setInterval is not cleared, it will keep on running. Now if you clicked 'RESTART' again, a new setInterval will also be running with the already running setInterval method, this will cause inconsistent UI changes.
-    return () => {
-      console.log("cleanup function");
-      clearInterval(startPomodoraInterval.current);
-    };
+    return () => clearInterval(startPomodoraInterval.current);
   }, [restartPauseTimerFlag]);
 
   return (

@@ -5,6 +5,20 @@
   font-weight: 0 1000;
 }
 
+@font-face {
+  font-family: Roboto Slab;
+  src: url("../public/assets/fonts/RobotoSlab-VariableFont_wght.ttf");
+  font-style: "normal";
+  font-weight: 0 1000;
+}
+
+@font-face {
+  font-family: Space Mono;
+  src: url("../public/assets/Space_Mono/SpaceMono-Regular.ttf");
+  font-style: "normal";
+  font-weight: 0 1000;
+}
+
 *,
 ::after,
 ::before {

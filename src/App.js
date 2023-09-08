@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./App.module.scss";
 import Tabbed from "./UI/Tabbed";
 import Timer from "./UI/Timer";
-import Modal from "./UI/Modal";
+import Setting from "./UI/Setting";
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
         <h1 className={styles["pomodora-h"]}>pomodoro</h1>
         <Tabbed></Tabbed>
         <Timer></Timer>
-        <Modal></Modal>
+        <Setting></Setting>
       </div>
     </main>
   );

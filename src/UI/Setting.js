@@ -2,11 +2,16 @@ import { useState } from "react";
 import style from "./Setting.module.scss";
 import Dialog from "./Dialog";
 
-const Setting = () => {
+const Setting = (prop) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const handleClickDialogOpen = (e) => {
     setIsDialogOpen(!isDialogOpen);
   };
+
+  const inputPomodora = (input) => {
+    console.log(input);
+  };
+
   return (
     <div className={style["setting"]}>
       <img
@@ -19,7 +24,12 @@ const Setting = () => {
         src="/assets/icon-settings.svg"
         alt=""
       />
-      {isDialogOpen && <Dialog handleClickDialogOpen={handleClickDialogOpen} />}
+      {isDialogOpen && (
+        <Dialog
+          handleClickDialogOpen={handleClickDialogOpen}
+          propInputPomodora={inputPomodora}
+        />
+      )}
     </div>
   );
 };

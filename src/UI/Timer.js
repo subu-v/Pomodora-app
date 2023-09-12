@@ -1,7 +1,7 @@
 import { React, useState, useRef, useEffect } from "react";
 import style from "./Timer.module.scss";
 
-const Timer = () => {
+const Timer = (prop) => {
   // setTime variable will contain the total time the pomodora should run.
   const setTime = 1;
   // When you multiply the given minutes by 60, it wll give how many seconds are there in the given minutes, so totalSetTimeInSecs contains the setTime in seconds.
@@ -113,7 +113,6 @@ const Timer = () => {
     // Let's say you clicked "RESTART" btn, the setInterval method is executed and the timer is running, now you clicked "PAUSE", now without the clearInterval method, the previously running setInterval will not be stopped cause the timer will keep on running because the setInterval is not cleared, it will keep on running. Now if you clicked 'RESTART' again, a new setInterval will also be running with the already running setInterval method, this will cause inconsistent UI changes.
     return () => clearInterval(startPomodoraInterval.current);
   }, [restartPauseTimerFlag]);
-
   return (
     <div className={style["timer"]}>
       <div className={style["timer-outer-circle"]}></div>

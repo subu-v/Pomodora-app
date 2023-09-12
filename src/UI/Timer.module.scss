@@ -66,12 +66,12 @@
     transition: rotate 1s linear;
 
     &:nth-child(1) {
-      background-color: #f87070;
+      background-color: var(--progressbar-bg-clr);
       z-index: 2;
     }
 
     &:nth-child(2) {
-      background-color: #f87070;
+      background-color: var(--progressbar-bg-clr);
       z-index: 2;
       rotate: 180deg;
     }
@@ -101,8 +101,8 @@
       text-align: center;
       font-family: inherit;
       font-size: 100px;
-      font-weight: 700;
-      letter-spacing: -5px;
+      font-weight: var(--timer-font-weight);
+      letter-spacing: var(--timer-letter-spacing);
       margin-bottom: 19px;
     }
 
@@ -124,7 +124,7 @@
       transition: color 0.35s ease;
 
       &:hover {
-        color: #f87070;
+        color: var(--tab-bg-clr);
       }
     }
   }

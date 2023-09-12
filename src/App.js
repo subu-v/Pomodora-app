@@ -5,6 +5,9 @@ import Timer from "./UI/Timer";
 import Setting from "./UI/Setting";
 
 const App = () => {
+  window.addEventListener("load", (e) => {
+    localStorage.clear();
+  });
   return (
     <main className={styles.pomodora}>
       <div>

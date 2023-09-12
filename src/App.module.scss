@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "Kumbh Sans";
+  font-family: Kumbh Sans;
   src: url("../public/assets/fonts/KumbhSans-VariableFont_YOPQ,wght.ttf");
-  font-style: "normal";
+  font-style: normal;
   font-weight: 0 1000;
 }
 
@@ -25,6 +25,14 @@
   margin: 0;
   padding: 0;
   box-sizing: inherit;
+}
+
+:root {
+  --tab-bg-clr: #f87070;
+  --progressbar-bg-clr: #f87070;
+  --apply-btn-hover: #f88e8dff;
+  --timer-letter-spacing: -5px;
+  --timer-font-weight: 700;
 }
 
 body {

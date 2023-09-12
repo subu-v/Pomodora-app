@@ -1,10 +1,16 @@
 import style from "./Dialog.module.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Dialog = (prop) => {
   const [pomodora, setPomodora] = useState(25);
   const [shortBreak, setShortBreak] = useState(5);
   const [longBreak, setLongBreak] = useState(15);
+  const [selectedTheme, setSelectedTheme] = useState(
+    localStorage.getItem("selectedTheme") || "theme-default"
+  );
+  const [selectedFontFamily, setSelectedFontFamily] = useState(
+    localStorage.getItem("selectedFontFamily") || "fontfamily-kumbh"
+  );
 
   const handleMouseEnterArrowUP = (e) =>
     (e.target.src = "/assets/icon-arrow-up-focus.svg");
@@ -17,10 +23,12 @@ const Dialog = (prop) => {
 
   const handleClickIncrement = (e) => {
     e.target.nextElementSibling.value++;
+    // setPomodora(Number(pomodora) + 1);
   };
 
   const handleClickDecrement = (e) => {
     e.target.previousElementSibling.value--;
+    // setPomodora(pomodora - 1);
   };
 
   const handleKeyUpPomodora = (e) => {
@@ -48,45 +56,114 @@ const Dialog = (prop) => {
   };
 
   const handleClickFontSwitcher = (e) => {
-    // Remove active class from all the btn elements
-    document
-      .querySelectorAll(`.${style["dialog-font-switcher-btn"]}`)
-      .forEach((btn) =>
-        btn.classList.remove(`${style["dialog-font-switcher-btn-active"]}`)
-      );
-    // Add the active class to the btn element that is being clicked
-    e.target.classList.add(`${style["dialog-font-switcher-btn-active"]}`);
+    setSelectedFontFamily(e.target.id);
   };
 
   const handleClickThemeSwitcher = (e) => {
-    // Remove active class from all the btn elements
-    document
-      .querySelectorAll(`.${style["dialog-theme-switcher-btn"]}`)
-      .forEach((btn) => {
-        btn.classList.remove(`${style["dialog-theme-switcher-btn-active"]}`);
-      });
-    // Add the active class to the btn element that is being clicked
-    e.target.classList.add(`${style["dialog-theme-switcher-btn-active"]}`);
+    setSelectedTheme(e.target.id);
   };
 
   const handleClickDialogClose = (e) => {
     prop.handleClickDialogOpen();
   };
 
+  const handleChangeInputPomodora = (e) => {
+    // setPomodora(e.target.value);
+    console.log("input changed");
+    console.log(e.target.value);
+  };
   const handleClickApply = (e) => {
     // Change font-family
-    const btnsFontFamily = document.querySelectorAll(
+    const btnsFontFamilySwitcher = document.querySelectorAll(
       `.${style["dialog-font-switcher-btn"]}`
     );
-    btnsFontFamily.forEach((btn) => {
+    btnsFontFamilySwitcher.forEach((btn) => {
       if (
         btn.classList.contains(`${style["dialog-font-switcher-btn-active"]}`)
       ) {
         document.body.style.fontFamily = getComputedStyle(btn).fontFamily;
+
+        if (btn.id === "fontfamily-kumbh") {
+          document.documentElement.style.setProperty(
+            "--timer-letter-spacing",
+            "-5px"
+          );
+          document.documentElement.style.setProperty(
+            "--timer-font-weight",
+            700
+          );
+        } else if (btn.id === "fontfamily-roboto") {
+          document.documentElement.style.setProperty(
+            "--timer-letter-spacing",
+            "normal"
+          );
+          document.documentElement.style.setProperty(
+            "--timer-font-weight",
+            700
+          );
+        } else if (btn.id === "fontfamily-spacemono") {
+          document.documentElement.style.setProperty(
+            "--timer-letter-spacing",
+            "-10px"
+          );
+          document.documentElement.style.setProperty(
+            "--timer-font-weight",
+            "400"
+          );
+        }
       }
     });
+
+    // Change Theme
+    const btnsThemeSwitcher = document.querySelectorAll(
+      `.${style["dialog-theme-switcher-btn"]}`
+    );
+
+    btnsThemeSwitcher.forEach((btn) => {
+      if (
+        btn.classList.contains(`${style["dialog-theme-switcher-btn-active"]}`)
+      ) {
+        if (btn.id === "theme-default") {
+          document.documentElement.style.setProperty("--tab-bg-clr", "#f87070");
+          document.documentElement.style.setProperty(
+            "--progressbar-bg-clr",
+            "#f87070"
+          );
+          document.documentElement.style.setProperty(
+            "--apply-btn-hover",
+            "#f88e8dff"
+          );
+        } else if (btn.id === "theme-diamond") {
+          document.documentElement.style.setProperty("--tab-bg-clr", "#70f3f8");
+          document.documentElement.style.setProperty(
+            "--progressbar-bg-clr",
+            "#70f3f8"
+          );
+          document.documentElement.style.setProperty(
+            "--apply-btn-hover",
+            "#8df5f9"
+          );
+        } else if (btn.id === "theme-amethyst") {
+          document.documentElement.style.setProperty("--tab-bg-clr", "#d881f8");
+          document.documentElement.style.setProperty(
+            "--progressbar-bg-clr",
+            "#d881f8"
+          );
+          document.documentElement.style.setProperty(
+            "--apply-btn-hover",
+            "#e09af9"
+          );
+        }
+      }
+    });
+
     prop.handleClickDialogOpen();
   };
+
+  useEffect(() => {
+    localStorage.setItem("selectedTheme", selectedTheme);
+    localStorage.setItem("selectedFontFamily", selectedFontFamily);
+  }, [selectedTheme, selectedFontFamily]);
 
   return (
     <div className={style["dialog"]}>
@@ -119,6 +196,7 @@ const Dialog = (prop) => {
             <input
               onKeyUp={handleKeyUpPomodora}
               onKeyDown={handleKeyDownPomodora}
+              onChange={handleChangeInputPomodora}
               className={style["dialog-input-ele"]}
               type="number"
               value={pomodora}
@@ -194,12 +272,35 @@ const Dialog = (prop) => {
             className={style["dialog-font-switcher-btn-flex"]}
           >
             <button
-              className={`${style["dialog-font-switcher-btn"]} ${style["dialog-font-switcher-btn-active"]}`}
+              className={`${style["dialog-font-switcher-btn"]} ${
+                selectedFontFamily === "fontfamily-kumbh"
+                  ? style["dialog-font-switcher-btn-active"]
+                  : ""
+              }`}
+              id="fontfamily-kumbh"
             >
               Aa
             </button>
-            <button className={style["dialog-font-switcher-btn"]}>Aa</button>
-            <button className={style["dialog-font-switcher-btn"]}>Aa</button>
+            <button
+              className={`${style["dialog-font-switcher-btn"]} ${
+                selectedFontFamily === "fontfamily-roboto"
+                  ? style["dialog-font-switcher-btn-active"]
+                  : ""
+              }`}
+              id="fontfamily-roboto"
+            >
+              Aa
+            </button>
+            <button
+              className={`${style["dialog-font-switcher-btn"]} ${
+                selectedFontFamily === "fontfamily-spacemono"
+                  ? style["dialog-font-switcher-btn-active"]
+                  : ""
+              }`}
+              id="fontfamily-spacemono"
+            >
+              Aa
+            </button>
           </div>
         </div>
       </div>
@@ -211,10 +312,29 @@ const Dialog = (prop) => {
             className={style["dialog-theme-switcher-btn-flex"]}
           >
             <button
-              className={`${style["dialog-theme-switcher-btn"]} ${style["dialog-theme-switcher-btn-active"]}`}
+              className={`${style["dialog-theme-switcher-btn"]} ${
+                selectedTheme === "theme-default"
+                  ? style["dialog-theme-switcher-btn-active"]
+                  : ""
+              }`}
+              id="theme-default"
             ></button>
-            <button className={style["dialog-theme-switcher-btn"]}></button>
-            <button className={style["dialog-theme-switcher-btn"]}></button>
+            <button
+              className={`${style["dialog-theme-switcher-btn"]} ${
+                selectedTheme === "theme-diamond"
+                  ? style["dialog-theme-switcher-btn-active"]
+                  : ""
+              }`}
+              id="theme-diamond"
+            ></button>
+            <button
+              className={`${style["dialog-theme-switcher-btn"]} ${
+                selectedTheme === "theme-amethyst"
+                  ? style["dialog-theme-switcher-btn-active"]
+                  : ""
+              }`}
+              id="theme-amethyst"
+            ></button>
           </div>
         </div>
       </div>

@@ -251,7 +251,7 @@
     width: 140px;
     height: 53px;
     border-radius: 26.5px;
-    background-color: #f87070;
+    background-color: var(--tab-bg-clr);
     border: none;
     color: #fff;
     text-align: center;
@@ -262,7 +262,7 @@
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: #f88e8dff;
+      background-color: var(--apply-btn-hover);
     }
   }
 }
